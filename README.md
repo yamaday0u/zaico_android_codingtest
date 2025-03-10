@@ -9,7 +9,7 @@
 
 本アプリは zaico API を利用して、在庫情報を取得・表示編集するアプリです。
 
-<img src="sample/app_sample.gif.gif" width="320">
+<img src="sample/app_sample.gif" width="320">
 
 API 仕様は以下の通りです。
 [zaico API Document](https://zaicodev.github.io/zaico_api_doc/)
