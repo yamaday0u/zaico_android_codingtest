@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version libs.versions.kotlin.get() // Kotlinのバージョン（1.9.24）を動的に使用 HttpClientのPOSTでここが原因でエラーしていた。
+
 }
 
 android {
