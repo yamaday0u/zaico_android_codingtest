@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.zaico.codingtest.databinding.ActivityAddBinding
 import jp.co.zaico.codingtest.viewmodel.AddViewModel
 
+@AndroidEntryPoint
 class AddActivity : AppCompatActivity() {
-    val viewModel = AddViewModel(this)
+    private val viewModel: AddViewModel by viewModels()
 
     private lateinit var binding: ActivityAddBinding
 

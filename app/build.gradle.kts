@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     kotlin("plugin.serialization") version libs.versions.kotlin.get() // Kotlinのバージョン（1.9.24）を動的に使用 HttpClientのPOSTでここが原因でエラーしていた。
 
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -61,4 +63,15 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.android.v164)
 
+
+    // DI
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler.android)
+
+    // test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4") // 使用しているCoroutinesのバージョンに合わせる
+    testImplementation("io.mockk:mockk:1.13.8") // MockK（モックライブラリ）
+    // Ktor Client Mock Engine (ViewModelのHTTP Clientをモックするため)
+    testImplementation("io.ktor:ktor-client-mock:2.0.0")
+    testImplementation(kotlin("test"))
 }

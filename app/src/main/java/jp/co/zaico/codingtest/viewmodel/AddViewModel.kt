@@ -1,43 +1,36 @@
 package jp.co.zaico.codingtest.viewmodel
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
 import jp.co.zaico.codingtest.R
 import jp.co.zaico.codingtest.model.request.RequestBody
 import jp.co.zaico.codingtest.model.response.Response
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class AddViewModel(
-    val context: Context
+@HiltViewModel
+class AddViewModel @Inject constructor(
+    private val context: Application,
+    private val httpClient: HttpClient
 ): ViewModel() {
 
     // データ登録
     fun registerInventory(itemName: String) : Int = runBlocking {
-
-        val client = HttpClient(Android) {
-            install(ContentNegotiation) {
-                json(Json { ignoreUnknownKeys = true })
-            }
-        }
         val requestBody = RequestBody(itemName)
 
         return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client!!.post(
+            val response: HttpResponse = httpClient.post(
                 String.format("%s/api/v1/inventories", context.getString(R.string.api_endpoint))
             ) {
                 header("Authorization", String.format("Bearer %s", context.getString(R.string.api_token)))
