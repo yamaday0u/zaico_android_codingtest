@@ -1,4 +1,4 @@
-package jp.co.zaico.codingtest
+package jp.co.zaico.codingtest.features.detailitem
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,6 +11,8 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.serialization.kotlinx.json.json
+import jp.co.zaico.codingtest.core.data.model.Inventory
+import jp.co.zaico.codingtest.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking

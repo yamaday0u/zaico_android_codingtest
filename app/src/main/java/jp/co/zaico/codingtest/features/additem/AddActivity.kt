@@ -1,4 +1,4 @@
-package jp.co.zaico.codingtest
+package jp.co.zaico.codingtest.features.additem
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.zaico.codingtest.databinding.ActivityAddBinding
-import jp.co.zaico.codingtest.viewmodel.AddViewModel
 
 @AndroidEntryPoint
 class AddActivity : AppCompatActivity() {

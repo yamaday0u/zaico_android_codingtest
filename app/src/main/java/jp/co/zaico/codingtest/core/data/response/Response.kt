@@ -1,4 +1,4 @@
-package jp.co.zaico.codingtest.model.response
+package jp.co.zaico.codingtest.core.data.response
 
 import kotlinx.serialization.Serializable
 

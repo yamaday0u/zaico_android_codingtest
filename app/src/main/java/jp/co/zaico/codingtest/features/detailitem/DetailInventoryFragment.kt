@@ -1,10 +1,11 @@
-package jp.co.zaico.codingtest
+package jp.co.zaico.codingtest.features.detailitem
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import jp.co.zaico.codingtest.core.data.model.Inventory
 import jp.co.zaico.codingtest.databinding.FragmentSecondBinding
 
 class DetailInventoryFragment : Fragment() {

@@ -1,4 +1,4 @@
-package jp.co.zaico.codingtest.viewmodel
+package jp.co.zaico.codingtest.features.additem
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -12,8 +12,8 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import jp.co.zaico.codingtest.R
-import jp.co.zaico.codingtest.model.request.RequestBody
-import jp.co.zaico.codingtest.model.response.Response
+import jp.co.zaico.codingtest.core.data.request.RequestBody
+import jp.co.zaico.codingtest.core.data.response.Response
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking

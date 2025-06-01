@@ -7,6 +7,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import jp.co.zaico.codingtest.databinding.ActivityMainBinding
+import jp.co.zaico.codingtest.features.additem.AddActivity
 
 class MainActivity : AppCompatActivity() {
 

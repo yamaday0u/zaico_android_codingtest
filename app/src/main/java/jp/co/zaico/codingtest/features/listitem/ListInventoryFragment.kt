@@ -1,4 +1,4 @@
-package jp.co.zaico.codingtest
+package jp.co.zaico.codingtest.features.listitem
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import jp.co.zaico.codingtest.core.data.model.Inventory
+import jp.co.zaico.codingtest.R
 import jp.co.zaico.codingtest.databinding.FragmentFirstBinding
 
 class ListInventoryFragment : Fragment() {

@@ -1,4 +1,4 @@
-package jp.co.zaico.codingtest.model.di
+package jp.co.zaico.codingtest.core.di
 
 import dagger.Module
 import dagger.Provides
