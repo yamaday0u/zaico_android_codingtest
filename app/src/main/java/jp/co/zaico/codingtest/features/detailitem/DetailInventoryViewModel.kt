@@ -1,40 +1,30 @@
 package jp.co.zaico.codingtest.features.detailitem
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.android.Android
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
-import io.ktor.serialization.kotlinx.json.json
-import jp.co.zaico.codingtest.core.data.model.Inventory
 import jp.co.zaico.codingtest.R
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import jp.co.zaico.codingtest.core.data.model.Inventory
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
+import javax.inject.Inject
 
-class DetailInventoryViewModel(
-    val context: Context
+@HiltViewModel
+class DetailInventoryViewModel @Inject constructor(
+    private val context: Application,
+    private val httpClient: HttpClient
 ) : ViewModel() {
 
     // データ取得
     @SuppressLint("DefaultLocale")
-    fun getInventory(inventoryId: Int): Inventory = runBlocking {
-
-        val client = HttpClient(Android) {
-            install(ContentNegotiation) {
-                json(Json { ignoreUnknownKeys = true })
-            }
-        }
-
-        return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client!!.get(
+    suspend fun getInventory(inventoryId: Int): Inventory  {
+            val response: HttpResponse = httpClient.get(
                 String.format(
                     "%s/api/v1/inventories/%d",
                     context.getString(R.string.api_endpoint),
@@ -47,13 +37,11 @@ class DetailInventoryViewModel(
             val jsonText = response.bodyAsText()
             val json = Json.parseToJsonElement(jsonText).jsonObject
 
-            return@async Inventory(
+            return Inventory(
                 id = json["id"].toString().replace(""""""", "").toInt(),
                 title = json["title"].toString().replace(""""""", ""),
                 quantity = json["quantity"].toString().replace(""""""", "")
             )
-
-        }.await()
 
     }
 

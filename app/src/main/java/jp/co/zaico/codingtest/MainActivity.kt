@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener { _ ->
             startActivity(AddActivity.createIntent(this))
         }
     }

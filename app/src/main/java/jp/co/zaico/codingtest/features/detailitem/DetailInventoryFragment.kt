@@ -1,14 +1,20 @@
 package jp.co.zaico.codingtest.features.detailitem
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.zaico.codingtest.core.data.model.Inventory
 import jp.co.zaico.codingtest.databinding.FragmentSecondBinding
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DetailInventoryFragment : Fragment() {
+    private val viewModel: DetailInventoryViewModel by viewModels()
 
     private var _binding: FragmentSecondBinding? = null
 
@@ -24,12 +30,12 @@ class DetailInventoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val inventoryId = arguments!!.getString("inventoryId")!!.toInt()
+        val inventoryId = requireArguments().getString("inventoryId")!!.toInt()
 
-        val _viewModel = DetailInventoryViewModel(context!!)
-
-        val inventory = _viewModel.getInventory(inventoryId)
-        initView(inventory)
+        lifecycleScope.launch {
+            val inventory = viewModel.getInventory(inventoryId)
+            initView(inventory)
+        }
 
     }
 
