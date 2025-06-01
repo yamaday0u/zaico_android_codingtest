@@ -7,35 +7,38 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import jp.co.zaico.codingtest.core.data.model.Inventory
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.zaico.codingtest.R
+import jp.co.zaico.codingtest.core.data.model.Inventory
 import jp.co.zaico.codingtest.databinding.FragmentFirstBinding
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ListInventoryFragment : Fragment() {
+    private val viewModel: ListInventoryViewModel by viewModels()
 
     private var _binding: FragmentFirstBinding? = null
 
-    private lateinit var viewModel: ListInventoryViewModel
     private lateinit var myAdapter: MyAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFirstBinding.inflate(layoutInflater)
         return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ListInventoryViewModel(requireContext())
 
         setupRecyclerView()
     }
@@ -67,8 +70,10 @@ class ListInventoryFragment : Fragment() {
     }
 
     private fun loadAndDisplayInventories() {
-        viewModel.getInventories().apply {
-            myAdapter.submitList(this)
+        lifecycleScope.launch {
+            viewModel.getInventories().apply {
+                myAdapter.submitList(this)
+            }
         }
     }
 
@@ -100,19 +105,19 @@ class MyAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
-        val _view= LayoutInflater.from(parent.context)
+        val view= LayoutInflater.from(parent.context)
             .inflate(R.layout.first_item, parent, false)
-        return ViewHolder(_view)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
-        val _item= getItem(position)
-        (holder.itemView.findViewById<View>(R.id.textView_id) as TextView).text = _item.id.toString()
-        (holder.itemView.findViewById<View>(R.id.textView_title) as TextView).text = _item.title
+        val item= getItem(position)
+        (holder.itemView.findViewById<View>(R.id.textView_id) as TextView).text = item.id.toString()
+        (holder.itemView.findViewById<View>(R.id.textView_title) as TextView).text = item.title
 
         holder.itemView.setOnClickListener{
-            itemClickListener.itemClick(_item)
+            itemClickListener.itemClick(item)
         }
     }
 
