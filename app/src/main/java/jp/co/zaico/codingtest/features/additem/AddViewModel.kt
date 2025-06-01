@@ -14,9 +14,6 @@ import io.ktor.http.contentType
 import jp.co.zaico.codingtest.R
 import jp.co.zaico.codingtest.core.data.request.RequestBody
 import jp.co.zaico.codingtest.core.data.response.Response
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,22 +23,18 @@ class AddViewModel @Inject constructor(
 ): ViewModel() {
 
     // データ登録
-    fun registerInventory(itemName: String) : Int = runBlocking {
+    suspend fun registerInventory(itemName: String) : Int {
         val requestBody = RequestBody(itemName)
 
-        return@runBlocking GlobalScope.async {
-            val response: HttpResponse = httpClient.post(
-                String.format("%s/api/v1/inventories", context.getString(R.string.api_endpoint))
-            ) {
-                header("Authorization", String.format("Bearer %s", context.getString(R.string.api_token)))
-                contentType(ContentType.Application.Json)
-                setBody(requestBody)
-            }
+        val response: HttpResponse = httpClient.post(
+            String.format("%s/api/v1/inventories", context.getString(R.string.api_endpoint))
+        ) {
+            header("Authorization", String.format("Bearer %s", context.getString(R.string.api_token)))
+            contentType(ContentType.Application.Json)
+            setBody(requestBody)
+        }
 
-            val body: Response = response.body()
-            return@async body.code
-
-        }.await()
-
+        val body: Response = response.body()
+        return body.code
     }
 }

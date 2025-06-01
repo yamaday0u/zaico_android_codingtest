@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.kotlinx.coroutines.android.v164)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
 
     // DI
@@ -69,9 +70,12 @@ dependencies {
     ksp(libs.hilt.compiler.android)
 
     // test
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4") // 使用しているCoroutinesのバージョンに合わせる
-    testImplementation("io.mockk:mockk:1.13.8") // MockK（モックライブラリ）
+    testImplementation(libs.kotlinx.coroutines.test) // 使用しているCoroutinesのバージョンに合わせる
+    testImplementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.mockk) // MockK（モックライブラリ）
     // Ktor Client Mock Engine (ViewModelのHTTP Clientをモックするため)
-    testImplementation("io.ktor:ktor-client-mock:2.0.0")
+    testImplementation(libs.ktor.client.mock)
+
+
     testImplementation(kotlin("test"))
 }

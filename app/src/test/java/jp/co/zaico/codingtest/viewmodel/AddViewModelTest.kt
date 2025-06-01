@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.serialization.json.Json
 import org.junit.After
@@ -79,7 +80,7 @@ class AddViewModelTest {
     }
 
     @Test
-    fun registry_Inventory() {
+    fun registry_Inventory() = runTest {
         val itemTitle = "Test Item"
 
         setupViewModelWithMockEngine()

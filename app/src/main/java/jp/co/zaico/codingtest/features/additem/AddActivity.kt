@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.zaico.codingtest.databinding.ActivityAddBinding
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddActivity : AppCompatActivity() {
@@ -30,12 +32,14 @@ class AddActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { _ ->
             val itemName = binding.editTextItemName.text.toString()
             if (itemName.isNotEmpty()) {
-                val code = viewModel.registerInventory(itemName)
-                if (code == 200) {
-                    Toast.makeText(this, "物品名登録が成功しました", Toast.LENGTH_SHORT).show()
-                    finish() // 一覧画面に戻る
-                } else {
-                    Toast.makeText(this, "物品名登録が失敗しました", Toast.LENGTH_SHORT).show()
+                lifecycleScope.launch {
+                    val code = viewModel.registerInventory(itemName)
+                    if (code == 200) {
+                        Toast.makeText(this@AddActivity, "物品名登録が成功しました", Toast.LENGTH_SHORT).show()
+                        finish() // 一覧画面に戻る
+                    } else {
+                        Toast.makeText(this@AddActivity, "物品名登録が失敗しました", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
                 Toast.makeText(this, "物品名を入力してください", Toast.LENGTH_SHORT).show()
