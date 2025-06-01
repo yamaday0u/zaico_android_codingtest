@@ -19,6 +19,9 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
+    private lateinit var viewModel: FirstViewModel
+    private lateinit var myAdapter: MyAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,31 +33,43 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val _viewModel = FirstViewModel(context!!)
+        viewModel = FirstViewModel(requireContext())
 
-        val _layoutManager = LinearLayoutManager(context!!)
-        val _dividerItemDecoration = DividerItemDecoration(
-            context!!,
-            _layoutManager.orientation
-        )
-        val _adapter = MyAdapter(object : MyAdapter.OnItemClickListener {
+        setupRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadAndDisplayInventories()
+    }
+
+    private fun setupRecyclerView() {
+        myAdapter = MyAdapter(object : MyAdapter.OnItemClickListener {
             override fun itemClick(item: Inventory) {
                 val bundle = bundleOf("inventoryId" to item.id.toString())
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
             }
         })
 
+        val layoutManager = LinearLayoutManager(requireContext())
+        val dividerItemDecoration = DividerItemDecoration(
+            requireContext(),
+            layoutManager.orientation
+        )
+
         _binding!!.recyclerView.also {
-            it.layoutManager = _layoutManager
-            it.addItemDecoration(_dividerItemDecoration)
-            it.adapter = _adapter
+            it.layoutManager = layoutManager
+            it.addItemDecoration(dividerItemDecoration)
+            it.adapter = myAdapter
         }
-
-        _viewModel.getInventories().apply {
-            _adapter.submitList(this)
-        }
-
     }
+
+    private fun loadAndDisplayInventories() {
+        viewModel.getInventories().apply {
+            myAdapter.submitList(this)
+        }
+    }
+
 
 }
 
