@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import jp.co.zaico.codingtest.databinding.FragmentSecondBinding
 
-class SecondFragment : Fragment() {
+class DetailInventoryFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
 
@@ -25,7 +25,7 @@ class SecondFragment : Fragment() {
 
         val inventoryId = arguments!!.getString("inventoryId")!!.toInt()
 
-        val _viewModel = SecondViewModel(context!!)
+        val _viewModel = DetailInventoryViewModel(context!!)
 
         val inventory = _viewModel.getInventory(inventoryId)
         initView(inventory)

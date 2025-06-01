@@ -17,7 +17,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 
-class SecondViewModel(
+class DetailInventoryViewModel(
     val context: Context
 ) : ViewModel() {
 

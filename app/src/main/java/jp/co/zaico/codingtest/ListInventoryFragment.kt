@@ -1,12 +1,12 @@
 package jp.co.zaico.codingtest
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.zaico.codingtest.databinding.FragmentFirstBinding
 
-class FirstFragment : Fragment() {
+class ListInventoryFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
-    private lateinit var viewModel: FirstViewModel
+    private lateinit var viewModel: ListInventoryViewModel
     private lateinit var myAdapter: MyAdapter
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = FirstViewModel(requireContext())
+        viewModel = ListInventoryViewModel(requireContext())
 
         setupRecyclerView()
     }
